@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["michael@ratchet.cc"]
   gem.description   = %q{Deploy Rails apps on Uberspace}
   gem.summary       = %q{Ratchetify helps you deploy a Ruby on Rails app on uberspace.de, a popular German shared hosting provider.}
-  gem.homepage      = "https://github.com/ratchetcc/ratchetify
+  gem.homepage      = "https://github.com/ratchetcc/ratchetify"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

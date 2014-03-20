@@ -11,8 +11,10 @@ Capistrano::Configuration.instance.load do
     
     desc "Tasks to prepare an uberspace for deployment"
     task :default do
-      unless file_exists? '.ratchet'
+      if not file_exists? '.ratchet'
         puts "Initializing uberspace '#{user}'"
+      else
+        puts "Uberspace has already been initialized."
       end
     end
     

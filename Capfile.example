@@ -1,0 +1,47 @@
+
+#
+# common recipies
+#
+require 'uberspacify/setup'
+require 'uberspacify/service'
+require 'uberspacify/rake'
+require 'uberspacify/git'
+require 'uberspacify/bundle'
+
+#
+# ruby version: 1.9.3, 2.0.0
+#
+set :ruby_version, '2.0.0'
+
+#
+# SSH uberspace user/password
+#
+set :user, 'uberspace_ssh_user' 
+set :password, 'uberspace_ssh_user_password'
+
+set :application, 'name_of_the_rails_app'  # has to match the name of the repo in e.g github
+set :application_home, 'html'
+
+# name of the thin run script
+set :daemon_service, 'runthin'
+
+ # select a high random port number
+set :daemon_port, 45532
+
+# github or bitbucket settings
+set :repository,  "https://your_name@github.com/your_name/name_of_the_rails_app.git"
+set :scm_password, 'git_pass_word_on_github'
+set :branch, 'master'
+
+#
+# uberspace server
+#
+role :web, "name_of_the_uberspace_server.uberspace.de"
+role :db,  "name_of_the_uberspace_server.uberspace.de"
+
+#
+# do not change unless you know what you're doing ...
+#
+set :environment, 'production'
+
+default_run_options[:pty] = true

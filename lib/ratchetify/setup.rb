@@ -14,7 +14,9 @@ Capistrano::Configuration.instance.load do
     end
     
     desc "Setup ruby interpreter and tools"
-    task :ruby do
+    task :ruby do |variable|
+      
+    end
       
       # script to setup ruby
       ruby_script = <<-EOF

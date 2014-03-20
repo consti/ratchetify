@@ -13,6 +13,7 @@ Capistrano::Configuration.instance.load do
 
   # optional variables
   _cset(:domain)                { nil }
+  _cset(:host)                  { nil }
   _cset(:daemon_port)           { rand(61000-32768+1)+32768 } # random ephemeral port
 
   # other variables

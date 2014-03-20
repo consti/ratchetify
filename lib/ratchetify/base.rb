@@ -8,13 +8,14 @@ end
 Capistrano::Configuration.instance.load do
 
   # required variables
-  _cset(:user)                  { abort_red "Please configure your Uberspace user in config/deploy.rb using 'set :user, <username>'" }
-  _cset(:repository)            { abort_red "Please configure your code repository config/deploy.rb using 'set :repository, <repo uri>'" }
+  _cset(:user)                  { abort_red "Please configure your Uberspace user using 'set :user, <username>'" }
+  _cset(:repository)            { abort_red "Please configure your code repository using 'set :repository, <repo uri>'" }
 
   # optional variables
   _cset(:domain)                { nil }
-  _cset(:thin_port)             { rand(61000-32768+1)+32768 } # random ephemeral port
+  _cset(:daemon_port)           { rand(61000-32768+1)+32768 } # random ephemeral port
 
+  # other variables
   _cset(:deploy_via)            { :remote_cache }
   _cset(:git_enable_submodules) { 1 }
   _cset(:branch)                { 'master' }

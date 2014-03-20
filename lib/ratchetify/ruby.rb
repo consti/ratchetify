@@ -16,6 +16,7 @@ EOF
 
       # setup the ruby environment
       put ruby_script, "/home/#{user}/ruby_scrip"
+      run "cp .bashrc bashrc.bak"
       run "cat /home/#{user}/ruby_scrip >> /home/#{user}/.bashrc"
       
       # configure ruby

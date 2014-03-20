@@ -1,9 +1,9 @@
 
 Capistrano::Configuration.instance.load do
   
-  desc "Tasks to start/stop/restart the thin server"
+  desc "Tasks to test the login credentials"
   namespace :test do
-    desc "Test the connectivity to uberspace.de"
+    desc "Test the login credentials"
     task :default do
       run "pwd && whoami"
     end

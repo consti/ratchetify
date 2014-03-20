@@ -2,9 +2,9 @@
 Capistrano::Configuration.instance.load do
   
   desc "Setup ruby interpreter and tools"
-  namespace :ruby do
+  namespace :setup do
     desc "Setup ruby interpreter and tools"
-    task :default do
+    task :ruby do
       run "pwd && whoami"
     end
   end

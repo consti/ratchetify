@@ -12,7 +12,7 @@ Capistrano::Configuration.instance.load do
     task :default do
     end
     
-    desc "Test the login credentials and print some usefull stuff..."
+    desc "Test the login credentials"
     task :test_credentials do
       run "pwd && whoami"
     end

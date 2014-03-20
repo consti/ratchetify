@@ -1,5 +1,11 @@
 require "ratchetify/version"
-require 'ratchetify/test'
 
-module Ratchetify
+Capistrano::Configuration.instance.load do
+  
+  desc "Prepare a new uberspace for deployment"
+  namespace :prepare do
+  end
 end
+
+#module Ratchetify
+#end

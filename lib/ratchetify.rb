@@ -13,6 +13,7 @@ Capistrano::Configuration.instance.load do
     task :default do
       if not file_exists? '.ratchet'
         puts "Initializing uberspace '#{user}'"
+        run "touch .ratchet"
       else
         puts "Uberspace has already been initialized."
       end

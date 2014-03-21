@@ -9,6 +9,10 @@ def deploy_dir
   "/home/#{user}/apps/#{application}"
 end
 
+def webroot_dir
+  /var/www/virtual/#{user}
+end
+
 #
 # file and dir handling
 #

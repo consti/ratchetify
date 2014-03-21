@@ -155,5 +155,11 @@ EOF
       run "cd #{deploy_dir} && ln -s public/assets assets"
     end
     
+    task :finalize do
+      # create symbolic links..
+      run "cd #{webroot_dir} && ln -s #{deploy_dir} #{host}.#{domain}"
+      
+    end
+    
   end # namespace
 end

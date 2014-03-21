@@ -79,7 +79,7 @@ EOF
       mysql_pwd = $1
       
       mysql_database = "#{user}_#{application}" # 'application' MUST NOT contain any '-' !!!
-      run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
+      #run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
       
       # create the database.yml file
       database_yml = <<-EOF

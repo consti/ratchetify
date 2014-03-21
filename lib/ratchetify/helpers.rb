@@ -5,13 +5,22 @@
 #
 # dirs and other constants
 #
-def deploy_dir
-  "/home/#{user}/apps/#{application}"
-end
 
 def webroot_dir
   "/var/www/virtual/#{user}"
 end
+
+def deploy_root
+  "#{web_root}/apps"
+end
+
+def deploy_dir
+  "#{deploy_root}/#{application}"
+end
+
+def conf_dir
+  "/home/#{user}/aconf"
+end 
 
 def daemon_service
   "run-#{application}"
@@ -30,7 +39,7 @@ def dir_exists?(full_path)
 end
 
 def create_dir(full_path, owner=nil)
-  run "mkdir #{full_path}"
+  run "mkdir #{full_path} -p"
   if owner
     run "chown #{owner} #{full_path}"
   end

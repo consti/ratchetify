@@ -19,10 +19,8 @@ Capistrano::Configuration.instance.load do
     end
     
     task :create_repo do
-      deploy_dir = "~/apps/#{application}"
-      
       # clone the repo first
-      git_cmd = "cd ~/apps && git clone #{fetch :repo} #{fetch :application}"
+      git_cmd = "cd #{deploy_root} && git clone #{fetch :repo} #{fetch :application}"
       
       run git_cmd do |channel, stream, out|
         if out =~ /Password:/
@@ -52,7 +50,7 @@ EOF
 #!/bin/bash
 export HOME=/home/#{user}
 source $HOME/.bash_profile
-cd /var/www/virtual/#{user}/#{host}.#{domain}
+cd #{deploy_dir}
 exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb 2>&1
 EOF
       

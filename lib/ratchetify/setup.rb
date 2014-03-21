@@ -24,9 +24,13 @@ Capistrano::Configuration.instance.load do
         run "cp .bashrc bashrc.bak"
         
         # create the necessary folders
-        create_dir app_dir unless dir_exists? app_dir
+        create_dir deploy_root unless dir_exists? deploy_root
         create_dir conf_dir unless dir_exists? conf_dir
-          
+        run "ln -s #{deploy_root} apps"
+        
+        # dummy main
+        create_dir "#{deploy_root}/main"
+        
         # enable ruby
         ruby
         # activate the daemontools

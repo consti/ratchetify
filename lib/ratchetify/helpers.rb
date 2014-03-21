@@ -10,7 +10,7 @@ def deploy_dir
 end
 
 def webroot_dir
-  /var/www/virtual/#{user}
+  "/var/www/virtual/#{user}"
 end
 
 #

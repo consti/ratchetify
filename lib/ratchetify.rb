@@ -6,6 +6,7 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/helpers'
   require 'ratchetify/setup'
   require 'ratchetify/ruby'
+  require 'ratchetify/create'
   
   # host and domain for the new app
   set :domain, nil

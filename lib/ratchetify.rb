@@ -7,10 +7,12 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/ruby'
   
   set :home, "~"
+  set :domain, nil
+  set :host, nil
+  
   set :daemon_port, rand(61000-32768+1)+32768  # random ephemeral port
   set :app_dir, "#{home}/apps"
   set :conf_dir, "#{home}/confa"
-  set :use_sudo, false
   
   desc "Prepare a new uberspace for deployment"
   namespace :prepare do

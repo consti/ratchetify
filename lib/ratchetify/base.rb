@@ -11,15 +11,11 @@ Capistrano::Configuration.instance.load do
   _cset(:user)                  { abort_red "Please configure your Uberspace user using 'set :user, <username>'" }
   _cset(:repository)            { abort_red "Please configure your code repository using 'set :repository, <repo uri>'" }
 
-  # optional variables
-  _cset(:domain)                { nil }
-  _cset(:host)                  { nil }
-  _cset(:daemon_port)           { rand(61000-32768+1)+32768 } # random ephemeral port
-
+  
 
   # internal variables, don't mess with them unsless you know what you do !
   _cset(:deploy_via)            { :remote_cache }
-  
+  set(:use_sudo)                { false }
   ssh_options[:forward_agent] = true # use the keys for the person running the cap command to check out the app
   default_run_options[:pty]   = true # needed for git password prompts
   

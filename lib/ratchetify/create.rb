@@ -6,7 +6,7 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/ruby'
   
   desc "Deploy an app for the first time"
-  namespace :setup do
+  namespace :create do
     
     desc "Deploy an app to uberspace"
     task :default do

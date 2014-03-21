@@ -13,7 +13,7 @@ Capistrano::Configuration.instance.load do
       environment
     end
     
-    desc "Create dirs, configure ruby, activate daemontools"
+    desc "Create dirs, configure ruby, activate daemontools, ..."
     task :environment do
       
       unless file_exists? '.ratchet'

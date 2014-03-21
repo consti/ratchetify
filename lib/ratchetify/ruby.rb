@@ -2,7 +2,7 @@
 Capistrano::Configuration.instance.load do
   
   desc "Setup ruby interpreter and tools"
-  namespace :setup do
+  namespace :prepare do
     desc "Setup ruby interpreter and tools"
     task :ruby do
       

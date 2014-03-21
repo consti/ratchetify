@@ -25,7 +25,7 @@ Capistrano::Configuration.instance.load do
         # enable ruby
         ruby
         # activate the daemontools
-        run "uberspace-setup-svscan"
+        run "uberspace-setup-svscan" unless dir_exists? 'service'
         
         # done
         run "touch .ratchet"

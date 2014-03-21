@@ -19,5 +19,5 @@ Capistrano::Configuration.instance.load do
   # internal variables, should not be changed in the cap file
   set :ruby_version, "2.0.0"
   set :environment, 'production'
-  
+  set :is_main,  false
 end

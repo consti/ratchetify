@@ -27,7 +27,7 @@ Capistrano::Configuration.instance.load do
         create_dir deploy_root unless dir_exists? deploy_root
         create_dir conf_dir unless dir_exists? conf_dir
         run "ln -s #{deploy_root} apps"
-         
+        
         # dummy main
         create_dir "#{deploy_root}/main"
         

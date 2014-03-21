@@ -3,6 +3,7 @@ require "ratchetify/version"
 Capistrano::Configuration.instance.load do
   
   require 'capistrano'
+  require 'ratchetify/base'
   require 'ratchetify/helpers'
   require 'ratchetify/ruby'
   

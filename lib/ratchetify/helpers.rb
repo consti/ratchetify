@@ -11,7 +11,7 @@ def webroot_dir
 end
 
 def deploy_root
-  "#{web_root}/apps"
+  "#{webroot_dir}/apps"
 end
 
 def deploy_dir

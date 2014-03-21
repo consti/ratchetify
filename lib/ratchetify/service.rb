@@ -1,6 +1,9 @@
 
 Capistrano::Configuration.instance.load do
   
+  require 'capistrano'
+  require 'ratchetify/helpers'
+  
   desc "Tasks to start/stop/restart the app server"
   namespace :service do
     desc "Start the app server"

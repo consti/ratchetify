@@ -6,7 +6,7 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/helpers'
   require 'ratchetify/ruby'
   
-  set :home, "bla"
+  set :home, "/home1"
   
   desc "Prepare a new uberspace for deployment"
   namespace :prepare do

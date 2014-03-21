@@ -65,5 +65,7 @@ def branch?(full_path)
 end
 
 def on_branch?(full_path, branch)
+  puts branch? full_path, branch
+  
   "* #{branch}" == capture("cd #{full_path} && git branch | grep '*'")
 end

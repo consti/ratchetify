@@ -51,7 +51,7 @@ EOF
 export HOME=/home/#{user}
 source $HOME/.bash_profile
 cd #{deploy_dir}
-exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb 2>&1
+exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb -E #{environment} 2>&1
 EOF
       
       # upload the run script

@@ -28,7 +28,7 @@ Capistrano::Configuration.instance.load do
       end
       
       # switch to the specified branch
-      run "cd #{deploy_dir} && git checkout -b #{fetch :branch}" unless on_branch deploy_dir, "#{fetch :branch}"
+      run "cd #{deploy_dir} && git checkout -b #{fetch :branch}" unless on_branch? deploy_dir, "#{fetch :branch}"
       
     end
     

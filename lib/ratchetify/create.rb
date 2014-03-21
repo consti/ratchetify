@@ -52,7 +52,7 @@ cd /var/www/virtual/#{user}/apps/#{application}
 exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb 2>&1
 EOF
       
-      deploy_dir = "~/apps/#{application}"
+      deploy_dir = "/home/#{user}/apps/#{application}"
       daemon_service = "run-#{application}"
       
       # upload the run script
@@ -63,8 +63,8 @@ EOF
       #run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
       
       # place the .htaccess file
-      put htaccess, "#{deploy_dir}/htaccess"
-      run "chmod +r #{deploy_dir}/htaccess"
+      put htaccess, "#{deploy_dir}/.htaccess"
+      run "chmod +r #{deploy_dir}/.htaccess"
       
     end
   

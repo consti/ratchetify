@@ -2,7 +2,7 @@
 Capistrano::Configuration.instance.load do
   
   desc "Setup ruby interpreter and tools"
-  namespace :prepare do
+  namespace :setup do
     desc "Setup ruby interpreter and tools"
     task :ruby do
       
@@ -16,7 +16,6 @@ EOF
 
       # setup the ruby environment
       put ruby_script, "/home/#{user}/ruby_scrip"
-      run "cp .bashrc bashrc.bak"
       run "cat /home/#{user}/ruby_scrip >> /home/#{user}/.bashrc"
       
       # configure ruby
@@ -27,6 +26,6 @@ EOF
       # cleanup
       run "rm /home/#{user}/ruby_scrip"
       
-    end
+    end # task :ruby
   end
 end

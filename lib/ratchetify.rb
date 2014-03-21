@@ -20,7 +20,7 @@ Capistrano::Configuration.instance.load do
   set :ruby_version, "2.0.0"
   
   desc "Prepare a new uberspace for deployment"
-  namespace :prepare do
+  namespace :setup do
     
     desc "Tasks to prepare an uberspace for deployment"
     task :environment do
@@ -28,6 +28,9 @@ Capistrano::Configuration.instance.load do
       unless file_exists? '.ratchet'
       
         puts "Initializing uberspace '#{user}'"
+        
+        # save the current .bashrc
+        run "cp .bashrc bashrc.bak"
         
         # create the necessary folders
         create_dir app_dir unless dir_exists? app_dir
@@ -38,9 +41,15 @@ Capistrano::Configuration.instance.load do
         
         # done
         run "touch .ratchet"
-      end
-      
-    end
+      end  
+    end # task :environment
+    
+    desc "removes all changes"
+    task :clean do
+      run "mv bashrc.bak .bashrc"
+      run "rm -rf .gem .gemrc .ratchet"
+      # keep ~/apps and ~/aconf for now ...
+    end # task :clean
     
   end
 end

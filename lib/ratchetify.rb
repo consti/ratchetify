@@ -34,7 +34,7 @@ Capistrano::Configuration.instance.load do
         create_dir conf_dir unless dir_exists? conf_dir
           
         # enable ruby
-        setup:ruby
+        ruby
         
         # done
         run "touch .ratchet"

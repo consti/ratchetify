@@ -11,7 +11,7 @@ Capistrano::Configuration.instance.load do
     desc "Deploy an app to uberspace"
     task :default do
       #create_repo
-      create_service
+      create_service_and_proxy
     end
     
     task :create_repo do

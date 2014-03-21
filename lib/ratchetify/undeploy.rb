@@ -9,8 +9,9 @@ Capistrano::Configuration.instance.load do
     
     desc "Undeploy an app from uberspace"
     task :default do
-      drop_database
-      remove_repo
+      remove_service
+      #drop_database
+      #remove_repo
     end
     
     task :drop_database do
@@ -21,6 +22,12 @@ Capistrano::Configuration.instance.load do
     task :remove_repo do
       run "cd #{deploy_root} && rm -rf #{application}"
       run "cd #{webroot_dir} && rm -rf #{host}.#{domain}"
+    end
+    
+    task :remove_service do
+      run "svc -dx #{daemon_service}"
+      run "cd service && rm ~/service/#{daemon_service}"
+      run "rm -rf ~/etc/run-#{daemon_service}"
     end
     
   end # namespace

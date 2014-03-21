@@ -29,6 +29,6 @@ Capistrano::Configuration.instance.load do
   set(:use_sudo)                { false }
 
   ssh_options[:forward_agent] = true
-  default_run_options[:pty]   = true
+  default_run_options[:pty]   = false
 
 end

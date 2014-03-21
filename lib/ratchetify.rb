@@ -15,8 +15,8 @@ Capistrano::Configuration.instance.load do
 
         puts "Initializing uberspace '#{user}'"
         
-        unless dir_exists? app_dir create_dir app_dir
-        unless dir_exists? conf_dir create_dir conf_dir
+        create_dir app_dir unless dir_exists? app_dir 
+        create_dir conf_dir unless dir_exists? conf_dir
           
         #run "touch .ratchet"
       else

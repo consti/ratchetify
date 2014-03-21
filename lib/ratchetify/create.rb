@@ -11,7 +11,8 @@ Capistrano::Configuration.instance.load do
     desc "Deploy an app to uberspace"
     task :default do
       #create_repo
-      create_service_and_proxy
+      #create_service_and_proxy
+      create_and_configure_database
     end
     
     task :create_repo do
@@ -68,5 +69,23 @@ EOF
       
     end
   
+    task :create_and_configure_database do
+      
+      # extract user & password
+      my_cnf = capture('cat ~/.my.cnf')
+      
+      my_cnf.match(/^user=(\w+)/)
+      mysql_user = $1
+      my_cnf.match(/^password=(\w+)/)
+      mysql_pwd = $1
+      
+      mysql_database = "#{application}"
+      
+      run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
+    end
+    
+    task :confif_app do
+    end
+    
   end # namespace
 end

@@ -26,7 +26,7 @@ Capistrano::Configuration.instance.load do
       end
       
       # switch to the specified branch
-      run "cd ~/apps && git checkout -b #{fetch :branch}"
+      run "cd ~/apps/#{application} && git checkout -b #{fetch :branch}"
       
     end
     

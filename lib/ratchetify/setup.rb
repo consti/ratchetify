@@ -8,7 +8,12 @@ Capistrano::Configuration.instance.load do
   desc "Prepare a new uberspace for deployment"
   namespace :setup do
     
-    desc "Tasks to prepare an uberspace for deployment"
+    desc "Prepare an uberspace for deployment"
+    task :default do
+      environment
+    end
+    
+    desc "Create dirs, configure ruby, activate daemontools"
     task :environment do
       
       unless file_exists? '.ratchet'
@@ -32,7 +37,7 @@ Capistrano::Configuration.instance.load do
       end  
     end # task :environment
     
-    desc "removes all changes"
+    desc "Cleans the uberspace, removes (most) changes"
     task :clean do
       run "mv bashrc.bak .bashrc"
       run "rm -rf .gem .gemrc .ratchet"

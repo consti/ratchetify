@@ -19,8 +19,8 @@ Capistrano::Configuration.instance.load do
 
   # internal variables, don't mess with them unsless you know what you do !
   set(:home)                    { "/home/#{user}" }
-  set(:app_dir)                 { "#{home}/apps" }
-  set(:conf_dir)                { "#{home}/aconf" }
+  #set(:app_dir)                 { "#{home}/apps" }
+  #set(:conf_dir)                { "#{home}/aconf" }
   
   ssh_options[:forward_agent] = true
   default_run_options[:pty]   = true # allow pseudo-terminals
@@ -37,8 +37,8 @@ Capistrano::Configuration.instance.load do
   _cset(:keep_releases)         { 3 }
 
   # uberspace presets
-  set(:deploy_to)               { "/var/www/virtual/#{user}/html" }
-  set(:use_sudo)                { false }
+  #set(:deploy_to)               { "/var/www/virtual/#{user}/html" }
+  #set(:use_sudo)                { false }
 
   
 

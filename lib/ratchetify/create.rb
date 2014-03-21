@@ -48,7 +48,7 @@ EOF
 #!/bin/bash
 export HOME=/home/#{user}
 source $HOME/.bash_profile
-cd /var/www/virtual/#{user}/apps/#{application}
+cd /var/www/virtual/#{user}/#{host}.#{domain}
 exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb 2>&1
 EOF
       
@@ -60,7 +60,7 @@ EOF
       run "chmod 755 /home/#{user}/bin/#{daemon_service}"
       
       # register the service
-      #run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
+      run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
       
       # place the .htaccess file
       put htaccess, "#{deploy_dir}/.htaccess"

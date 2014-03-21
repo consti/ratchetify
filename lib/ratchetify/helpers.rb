@@ -3,6 +3,13 @@
 #
 
 #
+# dirs and other constants
+#
+def deploy_dir
+  "/home/#{user}/apps/#{application}"
+end
+
+#
 # file and dir handling
 #
 

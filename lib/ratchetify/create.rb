@@ -19,7 +19,7 @@ Capistrano::Configuration.instance.load do
       deploy_dir = "~/apps/#{application}"
       
       # clone the repo first
-      git_cmd = "cd ~/apps && git clone #{fetch :repo}"
+      git_cmd = "cd ~/apps && git clone #{fetch :repo} #{fetch :application}"
       
       run git_cmd do |channel, stream, out|
         if out =~ /Password:/
@@ -53,7 +53,6 @@ cd /var/www/virtual/#{user}/#{host}.#{domain}
 exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb 2>&1
 EOF
       
-      deploy_dir = "/home/#{user}/apps/#{application}"
       daemon_service = "run-#{application}"
       
       # upload the run script
@@ -79,9 +78,26 @@ EOF
       my_cnf.match(/^password=(\w+)/)
       mysql_pwd = $1
       
-      mysql_database = "#{application}"
-      
+      mysql_database = "#{user}_#{application}" # 'application' MUST NOT contain any '-' !!!
       run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
+      
+      # create the database.yml file
+      database_yml = <<-EOF
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: #{mysql_database}
+  pool: 15
+  username: #{mysql_user}
+  password: #{mysql_pwd}
+  host: localhost
+  socket: /var/lib/mysql/mysql.sock
+  timeout: 10000
+
+EOF
+      # upload the database.yml file
+      put database_yml, "#{deploy_dir}/config/database.yml"
+      
     end
     
     task :confif_app do

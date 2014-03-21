@@ -11,7 +11,7 @@ Capistrano::Configuration.instance.load do
     
     desc "Tasks to prepare an uberspace for deployment"
     task :default do
-      if file_exists? '.ratchet'
+      if file_exists? '.gem'
 
         puts "Initializing uberspace '#{user}'"
         

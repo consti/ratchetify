@@ -22,6 +22,9 @@ Capistrano::Configuration.instance.load do
   set(:app_dir)                 { "#{home}/apps" }
   set(:conf_dir)                { "#{home}/aconf" }
   
+  ssh_options[:forward_agent] = true
+  default_run_options[:pty]   = true # allow pseudo-terminals
+  
 #
 # old stuff
 #
@@ -37,7 +40,6 @@ Capistrano::Configuration.instance.load do
   set(:deploy_to)               { "/var/www/virtual/#{user}/html" }
   set(:use_sudo)                { false }
 
-  ssh_options[:forward_agent] = true
-  default_run_options[:pty]   = true # allow pseudo-terminals
+  
 
 end

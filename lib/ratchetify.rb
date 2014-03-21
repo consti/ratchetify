@@ -23,7 +23,7 @@ Capistrano::Configuration.instance.load do
   namespace :prepare do
     
     desc "Tasks to prepare an uberspace for deployment"
-    task :default do
+    task :environment do
       
       unless file_exists? '.ratchet'
       
@@ -40,11 +40,6 @@ Capistrano::Configuration.instance.load do
         run "touch .ratchet"
       end
       
-    end
-    
-    desc "Test the login credentials"
-    task :test_credentials do
-      run "pwd && whoami"
     end
     
   end

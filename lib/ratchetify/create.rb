@@ -44,7 +44,7 @@ RewriteRule ^(.*)$ http://localhost:#{daemon_port}/$1 [P]
 EOF
       
       # script to start app
-      run_script = <<-EOF
+      script = <<-EOF
 #!/bin/bash
 export HOME=/home/#{user}
 source $HOME/.bash_profile
@@ -56,7 +56,7 @@ EOF
       daemon_service = "run-#{application}"
       
       # upload the run script
-      put thin_script, "/home/#{user}/bin/#{daemon_service}"
+      put script, "/home/#{user}/bin/#{daemon_service}"
       run "chmod 755 /home/#{user}/bin/#{daemon_service}"
       
       # register the service

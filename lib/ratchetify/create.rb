@@ -15,6 +15,7 @@ Capistrano::Configuration.instance.load do
       create_and_configure_database
       config_web_app
       config_rails_app
+      finalize
     end
     
     task :create_repo do

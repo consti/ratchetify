@@ -20,5 +20,6 @@ Capistrano::Configuration.instance.load do
   set :app_dir, "#{home}/apps"
   set :conf_dir, "#{home}/aconf"
   set :ruby_version, "2.0.0"
+  set :environment, 'production'
   
 end

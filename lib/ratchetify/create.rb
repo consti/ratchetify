@@ -10,10 +10,11 @@ Capistrano::Configuration.instance.load do
     
     desc "Deploy an app to uberspace"
     task :default do
-      #create_repo
-      #create_service_and_proxy
-      #create_and_configure_database
+      create_repo
+      create_service_and_proxy
+      create_and_configure_database
       config_web_app
+      config_rails_app
     end
     
     task :create_repo do
@@ -132,6 +133,26 @@ EOF
       # upload the database.yml file
       put unicorn_rb, "#{deploy_dir}/config/unicorn.rb"
       
+    end
+    
+    task :config_rails_app do
+      # run bundle install first
+      run "cd #{deploy_dir} && bundle install --path ~/.gem"
+
+      # create a default application.yml file
+      run "cd #{deploy_dir}/config && cp application.example.yml application.yml"
+      
+      # run rake db:migrate to create all tables etc
+      run "cd #{deploy_dir} && bundle exec rake db:migrate RAILS_ENV=#{fetch :environment}"
+      
+      # run rake db:seed to load seed data
+      run "cd #{deploy_dir} && bundle exec rake db:seed RAILS_ENV=#{fetch :environment}"
+      
+      # compile assets from the asset pipeline
+      run "cd #{deploy_dir} && bundle exec rake assets:precompile RAILS_ENV=#{fetch :environment}"
+      
+      # create symbolic links so that apache will find the assets
+      run "cd #{deploy_dir} && ln -s public/assets assets"
     end
     
   end # namespace

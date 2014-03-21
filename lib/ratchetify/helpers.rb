@@ -11,20 +11,20 @@ def dir_exists?(full_path)
 end
 
 def create_dir(full_path, owner=nil)
-  shell "mkdir #{full_path}", sudoer
+  shell "mkdir #{full_path}", use_sudo
   if owner != nil then
-    shell "chown #{owner} #{full_path}", sudoer
+    shell "chown #{owner} #{full_path}", use_sudo
   end
 end
 
 def delete_dir(full_path)
   if dir_exists? full_path then
-    shell "rm -Rf #{full_path}", sudoer
+    shell "rm -Rf #{full_path}", use_sudo
   end
 end
 
 def delete_file(full_path)
   if file_exists? full_path then
-    shell "rm #{full_path}", sudoer
+    shell "rm #{full_path}", use_sudo
   end
 end

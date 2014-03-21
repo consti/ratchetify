@@ -16,6 +16,16 @@ Capistrano::Configuration.instance.load do
   _cset(:host)                  { nil }
   _cset(:daemon_port)           { rand(61000-32768+1)+32768 } # random ephemeral port
 
+
+  # internal variables, don't mess with them unsless you know what you do !
+  set(:home)                    { "/home/#{user}" }
+  set(:app_dir)                 { "#{home}/apps" }
+  set(:conf_dir)                { "#{home}/aconf" }
+  
+#
+# old stuff
+#
+
   # other variables
   _cset(:deploy_via)            { :remote_cache }
   _cset(:git_enable_submodules) { 1 }
@@ -25,10 +35,9 @@ Capistrano::Configuration.instance.load do
 
   # uberspace presets
   set(:deploy_to)               { "/var/www/virtual/#{user}/html" }
-  set(:home)                    { "/home/#{user}" }
   set(:use_sudo)                { false }
 
   ssh_options[:forward_agent] = true
-  default_run_options[:pty]   = false
+  default_run_options[:pty]   = true # allow pseudo-terminals
 
 end

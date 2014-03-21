@@ -13,6 +13,10 @@ def webroot_dir
   "/var/www/virtual/#{user}"
 end
 
+def daemon_service
+  "run-#{application}"
+end
+
 #
 # file and dir handling
 #

@@ -56,8 +56,6 @@ cd /var/www/virtual/#{user}/#{host}.#{domain}
 exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb 2>&1
 EOF
       
-      daemon_service = "run-#{application}"
-      
       # upload the run script
       put script, "/home/#{user}/bin/#{daemon_service}"
       run "chmod 755 /home/#{user}/bin/#{daemon_service}"

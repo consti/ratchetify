@@ -8,6 +8,8 @@ Capistrano::Configuration.instance.load do
   
   set :home, "~"
   set :daemon_port, rand(61000-32768+1)+32768  # random ephemeral port
+  set :app_dir, "#{home}/apps"
+  set :conf_dir, "#{home}/confa"
   
   desc "Prepare a new uberspace for deployment"
   namespace :prepare do
@@ -16,10 +18,10 @@ Capistrano::Configuration.instance.load do
     task :default do
       if not file_exists? '.ratchet'
 
-        puts "Initializing uberspace '#{user}' at location '#{home}'"
+        puts "Initializing uberspace '#{user}'"
         
-        #create_dir(app_dir) unless dir_exists? (app_dir)
-        #create_dir conf_dir unless dir_exists? conf_dir
+        create_dir(app_dir) unless dir_exists? (app_dir)
+        create_dir conf_dir unless dir_exists? conf_dir
           
         #run "touch .ratchet"
       else

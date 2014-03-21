@@ -3,7 +3,6 @@ require "ratchetify/version"
 Capistrano::Configuration.instance.load do
   
   require 'capistrano'
-  require 'ratchetify/base'
   require 'ratchetify/helpers'
   require 'ratchetify/ruby'
   
@@ -14,7 +13,7 @@ Capistrano::Configuration.instance.load do
     task :default do
       if not file_exists? '.ratchet'
 
-        puts "Initializing uberspace '#{user}', #{app_dir}, #{conf_dir}"
+        puts "Initializing uberspace '#{user}', #{deploy_to}"
         
         #create_dir(app_dir) unless dir_exists? (app_dir)
         #create_dir conf_dir unless dir_exists? conf_dir

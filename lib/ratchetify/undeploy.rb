@@ -9,7 +9,7 @@ Capistrano::Configuration.instance.load do
     
     desc "Undeploy an app from uberspace"
     task :default do
-      #drop_database
+      drop_database
       remove_repo
     end
     

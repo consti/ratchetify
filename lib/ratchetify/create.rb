@@ -12,7 +12,8 @@ Capistrano::Configuration.instance.load do
     task :default do
       #create_repo
       #create_service_and_proxy
-      create_and_configure_database
+      #create_and_configure_database
+      config_web_app
     end
     
     task :create_repo do
@@ -79,7 +80,7 @@ EOF
       mysql_pwd = $1
       
       mysql_database = "#{user}_#{application}" # 'application' MUST NOT contain any '-' !!!
-      #run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
+      run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
       
       # create the database.yml file
       database_yml = <<-EOF
@@ -100,7 +101,37 @@ EOF
       
     end
     
-    task :confif_app do
+    task :config_web_app do
+      
+      unicorn_rb = <<-EOF
+# config/unicorn.rb
+worker_processes 3
+timeout 15
+preload_app true
+
+before_fork do |server, worker|
+  Signal.trap 'TERM' do
+    puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
+    Process.kill 'QUIT', Process.pid
+  end
+
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.connection.disconnect!
+end
+
+after_fork do |server, worker|
+  Signal.trap 'TERM' do
+    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
+  end
+
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.establish_connection
+end      
+EOF
+  
+      # upload the database.yml file
+      put unicorn_rb, "#{deploy_dir}/config/unicorn.rb"
+      
     end
     
   end # namespace

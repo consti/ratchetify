@@ -59,12 +59,12 @@ EOF
       put script, "/home/#{user}/bin/#{daemon_service}"
       run "chmod 755 /home/#{user}/bin/#{daemon_service}"
       
-      # register the service
-      run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
-      
       # place the .htaccess file
       put htaccess, "#{deploy_dir}/.htaccess"
       run "chmod +r #{deploy_dir}/.htaccess"
+      
+      # register the service
+      run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
       
     end
   

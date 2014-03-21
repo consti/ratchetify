@@ -6,7 +6,7 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/helpers'
   require 'ratchetify/ruby'
   
-  set :home, "/home/#{user}"
+  set :home, "~"
   set :daemon_port, rand(61000-32768+1)+32768  # random ephemeral port
   
   desc "Prepare a new uberspace for deployment"

@@ -10,9 +10,6 @@ Capistrano::Configuration.instance.load do
     
     desc "Deploy an app to uberspace"
     task :default do
-      puts on_branch? deploy_dir, "#{fetch :branch}"
-      exit
-      
       create_repo
       create_service_and_proxy
       create_and_configure_database

@@ -13,7 +13,7 @@ Capistrano::Configuration.instance.load do
     task :default do
       if not file_exists? '.ratchet'
 
-        puts "Initializing uberspace '#{user}', #{deploy_to}"
+        puts "Initializing uberspace '#{user}', #{daemon_port}"
         
         #create_dir(app_dir) unless dir_exists? (app_dir)
         #create_dir conf_dir unless dir_exists? conf_dir

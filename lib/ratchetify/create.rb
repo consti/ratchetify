@@ -10,10 +10,10 @@ Capistrano::Configuration.instance.load do
     
     desc "Deploy an app to uberspace"
     task :default do
-      clone
+      clone_repo
     end
     
-    task :clone do
+    task :clone_repo do
       # clone the repo first
       git_cmd = "cd ~/apps && git clone #{fetch :repo}"
       

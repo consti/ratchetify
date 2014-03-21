@@ -19,18 +19,17 @@ Capistrano::Configuration.instance.load do
 
   # internal variables, don't mess with them unsless you know what you do !
   set(:home)                    { "/home/#{user}" }
-  #set(:app_dir)                 { "#{home}/apps" }
-  #set(:conf_dir)                { "#{home}/aconf" }
+  _cset(:deploy_via)            { :remote_cache }
   
-  ssh_options[:forward_agent] = true
-  default_run_options[:pty]   = true # allow pseudo-terminals
+  ssh_options[:forward_agent] = true # use the keys for the person running the cap command to check out the app
+  default_run_options[:pty]   = true # needed for git password prompts
   
 #
 # old stuff
 #
 
   # other variables
-  _cset(:deploy_via)            { :remote_cache }
+  
   _cset(:git_enable_submodules) { 1 }
   _cset(:branch)                { 'master' }
 

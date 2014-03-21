@@ -18,7 +18,6 @@ Capistrano::Configuration.instance.load do
 
 
   # internal variables, don't mess with them unsless you know what you do !
-  set(:home)                    { "/home/#{user}" }
   _cset(:deploy_via)            { :remote_cache }
   
   ssh_options[:forward_agent] = true # use the keys for the person running the cap command to check out the app

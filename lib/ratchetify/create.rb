@@ -93,7 +93,7 @@ EOF
 
     task :create_service_thin do
       # script to start thin
-      thin_script = <<-EOF
+      script = <<-EOF
 #!/bin/bash
 export HOME=/home/#{user}
 source $HOME/.bash_profile

@@ -11,9 +11,9 @@ Capistrano::Configuration.instance.load do
     desc "Deploy an app to uberspace"
     task :default do
       create_repo
-      create_service_and_proxy
       create_and_configure_database
-      config_web_app
+      create_reverse_proxy
+      create_service
       config_rails_app
       finalize
     end
@@ -33,40 +33,8 @@ Capistrano::Configuration.instance.load do
       # switch to the specified branch
       run "cd #{deploy_dir} && git checkout -b #{fetch :branch}" unless on_branch? deploy_dir, "#{fetch :branch}"
       
-    end
+    end # task :create_repo
     
-    task :create_service_and_proxy do
-      
-      # .htaccess      
-      htaccess = <<-EOF
-RewriteEngine On
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ http://localhost:#{daemon_port}/$1 [P]
-EOF
-      
-      # script to start app
-      script = <<-EOF
-#!/bin/bash
-export HOME=/home/#{user}
-source $HOME/.bash_profile
-cd #{deploy_dir}
-exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb -E #{environment} 2>&1
-EOF
-      
-      # upload the run script
-      put script, "/home/#{user}/bin/#{daemon_service}"
-      run "chmod 755 /home/#{user}/bin/#{daemon_service}"
-      
-      # place the .htaccess file
-      put htaccess, "#{deploy_dir}/.htaccess"
-      run "chmod +r #{deploy_dir}/.htaccess"
-      
-      # register the service
-      run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
-      
-    end
-  
     task :create_and_configure_database do
       
       # extract user & password
@@ -97,10 +65,63 @@ EOF
       # upload the database.yml file
       put database_yml, "#{deploy_dir}/config/database.yml"
       
-    end
+    end # task :create_and_configure_database
     
-    task :config_web_app do
+    task :create_reverse_proxy do
       
+      # .htaccess      
+      htaccess = <<-EOF
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ http://localhost:#{daemon_port}/$1 [P]
+EOF
+
+      # place the .htaccess file
+      put htaccess, "#{deploy_dir}/.htaccess"
+      run "chmod +r #{deploy_dir}/.htaccess"
+      
+    end # task :create_reverse_proxy
+
+    task :create_service do
+      create_service_thin # the only option for now
+      
+      # register the service
+      run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
+      
+    end # task :create_service
+
+    task :create_service_thin do
+      # script to start thin
+      thin_script = <<-EOF
+#!/bin/bash
+export HOME=/home/#{user}
+source $HOME/.bash_profile
+cd #{deploy_dir}
+exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec thin start -p #{daemon_port} -e production 2>&1
+EOF
+      
+      # upload the run script
+      put script, "/home/#{user}/bin/#{daemon_service}"
+      run "chmod 755 /home/#{user}/bin/#{daemon_service}"
+      
+    end # task :create_service_thin
+
+    task :create_service_unicorn do
+      # script to start unicorn
+      script = <<-EOF
+#!/bin/bash
+export HOME=/home/#{user}
+source $HOME/.bash_profile
+cd #{deploy_dir}
+exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb -E #{environment} 2>&1
+EOF
+      
+      # upload the run script
+      put script, "/home/#{user}/bin/#{daemon_service}"
+      run "chmod 755 /home/#{user}/bin/#{daemon_service}"
+      
+      # script to configure unicorn
       unicorn_rb = <<-EOF
 # config/unicorn.rb
 worker_processes 3
@@ -127,17 +148,23 @@ after_fork do |server, worker|
 end      
 EOF
   
-      # upload the database.yml file
-      put unicorn_rb, "#{deploy_dir}/config/unicorn.rb"
+      # upload the unicorn config file, if it does not exist
+      put unicorn_rb, "#{deploy_dir}/config/unicorn.rb" unless file_exists? "#{deploy_dir}/config/unicorn.rb"
       
-    end
+    end # task :create_service_unicorn
     
     task :config_rails_app do
       # run bundle install first
       run "cd #{deploy_dir} && bundle install --path ~/.gem"
 
-      # create a default application.yml file
-      run "cd #{deploy_dir}/config && cp application.example.yml application.yml"
+      # application.yml should normally be on the .gitignore list, however you application might need 
+      # a basic configuration file to e.g. load seed data. Provide such a basic file as 'application.example.yml'
+      # and it will be used to configure the app initially.
+      
+      # create a default application.yml file if non was provided
+      if not file_exists? "#{deploy_dir}/config/application.yml"
+        run "cd #{deploy_dir}/config && cp application.example.yml application.yml"
+      end
       
       # run rake db:migrate to create all tables etc
       run "cd #{deploy_dir} && bundle exec rake db:migrate RAILS_ENV=#{fetch :environment}"

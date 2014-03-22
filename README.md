@@ -1,28 +1,27 @@
-# Uberspacify
+# Ratchetify
 
-Uberspacify helps you deploy a Ruby on Rails app on Uberspace, a popular shared hosting provider.
+Ratchetify helps you deploy a Ruby on Rails app on Uberspace (uberspace.de), a really cool shared hosting provider.
 
-All the magic is built into a couple nice Capistrano scripts. Uberspacify will create an environment for your app, run it in standalone mode, monitor it using Daemontools, and configure Apache to reverse-proxy to it. Uberspacify will also find out your Uberspace MySQL password and create a `database.yml`
+All the magic is built into a couple nice Capistrano scripts. Ratchetify will create an environment for your app, run it in standalone mode, monitor it using Daemontools, and configure Apache to reverse-proxy to it. Ratchetify will also retrieve your MySQL password, create a dedicated database for your app and create a `database.yml`.
 
 ## Installation
 
 Add this line to your application's `Gemfile`:
 
 ```ruby
-gem 'uberspacify'
+gem 'ratchetify', :git => 'https://github.com/ratchetcc/ratchetify.git'
 ```
 
 And then execute:
 
     $ bundle
     
-This will install uberspacify, Capistrano 2.x and all dependent gems for you.
+This will install ratchetify, Capistrano 2.x and all dependent gems for you.
 
-## How to use uberspacify
+## How to use ratchetify
 
-To-be-done ... :-)
-
-See Capfile.example for now, add it to your rails app and run 'cap setup' to deploy the RAILS project to a clean uberspace account.
+There is a sample [capfile](https://github.com/ratchetcc/ratchetify/blob/master/Capfile.example) that shows the most important settings you need to get started. In addition to the
+attributes used in the Capfile, there are more attributes pre-set in lib/ratchetify.rb and lib/ratchetify/base.rb but usually there is no need to change any of these.
 
 This tools is highly opinionated i.e. all the settings, the way how I run the app etc. are THE WAY I LIKE IT. This does not mean it can not be done differently or that it is the best way to do it ...
 

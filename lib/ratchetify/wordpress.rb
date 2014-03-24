@@ -24,17 +24,17 @@ Capistrano::Configuration.instance.load do
       # download the worpress .tar
       unless dir_exists? deploy_dir
         # download wp and unpack it
-        run "cd #{deploy_root} && curl -O https://s3-eu-west-1.amazonaws.com/ratchetp/wordpress-3.8.1.tar.gz"
-        run "cd #{deploy_root} && mkdir wp_tmp"
-        run "cd #{deploy_root} && tar xfz wordpress*"
-        run "cd #{deploy_root}/wp_tmp && mv wordpress .."
+        run "cd #{webroot_dir} && curl -O https://s3-eu-west-1.amazonaws.com/ratchetp/wordpress-3.8.1.tar.gz"
+        #run "cd #{deploy_root} && mkdir wp_tmp"
+        run "cd #{webroot_dir} && tar xfz wordpress* -C #{deploy_root}"
+        run "cd #{deploy_root} && mv wordpress #{application}"
         
         # cleanup
         run "cd #{deploy_root} && rm wordpress*"
         run "cd #{deploy_root} && rm -rf wp_tmp"
         
         # rename word press to -> :application
-        run "cd #{deploy_root} && mv ./wordpress #{application}"
+        #run "cd #{deploy_root} && mv ./wordpress #{application}"
       end
       
     end # task :create_dir

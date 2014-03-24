@@ -9,14 +9,14 @@ Capistrano::Configuration.instance.load do
     
     desc "Add a fully qualified domain and wildcard domain if specified"
     task :add do
-      run "uberspace-add-domain -d #{host}.#{domain} -w"
-      run "uberspace-add-domain -d #{domain} -w" unless (wildcard_domain == false)
+      run "uberspace-add-domain -d #{fetch :host}.#{fetch :domain} -w"
+      run "uberspace-add-domain -d #{fetch :domain} -w" unless (wildcard_domain == false)
     end
     
     desc "Removes a fully qualified domain and wildcard domain if specified"
     task :remove do
-      run "uberspace-del-domain -d #{host}.#{domain} -w"
-      run "uberspace-del-domain -d #{domain} -w" unless (wildcard_domain == false)
+      run "uberspace-del-domain -d #{fetch :host}.#{fetch :domain} -w"
+      run "uberspace-del-domain -d #{fetch :domain} -w" unless (wildcard_domain == false)
     end
         
   end

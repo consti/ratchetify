@@ -28,7 +28,7 @@ Capistrano::Configuration.instance.load do
         run "cd #{deploy_root} && mkdir wp_tmp"
         run "cd #{deploy_root} && tar xfz wordpress*"
         run "cd #{deploy_root}/wp_tmp && mv wordpress .."
-        run "cd #{deploy_root} && mv wordpress #{application}"
+        run "cd #{deploy_root} && mv ./wordpress #{application}"
         
         # cleanup
         run "cd #{deploy_root} && rm wordpress*"

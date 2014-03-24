@@ -185,7 +185,7 @@ EOF
     
     task :finalize do
       # create symbolic links..
-      run "cd #{webroot_dir} && ln -s #{deploy_dir} #{host}.#{domain}"
+      #run "cd #{webroot_dir} && ln -s #{deploy_dir} #{host}.#{domain}"
       if wildcard_domain == true
         run "cd #{webroot_dir} && ln -s #{deploy_dir} #{domain}"
       end

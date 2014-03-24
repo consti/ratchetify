@@ -33,7 +33,7 @@ Capistrano::Configuration.instance.load do
         
         # remove default html and symbolic link
         delete_dir "#{webroot_dir}/html"
-        delete_dir "/home/#{user}/html"
+        delete_file "/home/#{user}/html"
         
         # enable ruby
         ruby

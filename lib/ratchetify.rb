@@ -18,6 +18,7 @@ Capistrano::Configuration.instance.load do
   
   # random port used for the reverse proxy
   set :daemon_port, rand(61000-32768+1)+32768  # random port
+  set :type, :rails # supported types are: :rails, :wordpress, 
   
   # internal variables, should not be changed in the cap file
   set :ruby_version, "2.0.0"

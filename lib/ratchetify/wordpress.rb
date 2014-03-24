@@ -27,7 +27,8 @@ Capistrano::Configuration.instance.load do
         run "cd #{deploy_root} && curl -O https://s3-eu-west-1.amazonaws.com/ratchetp/wordpress-3.8.1.tar.gz"
         run "cd #{deploy_root} && mkdir wp_tmp"
         run "cd #{deploy_root} && tar xfz wordpress*"
-        run "cd #{deploy_root} && mv wp_tmp/wordpress #{deploy_dir}"
+        run "cd #{deploy_root}/wp_tmp && mv wordpress .."
+        run "cd #{deploy_root} && mv wordpress #{application}"
         
         # cleanup
         run "cd #{deploy_root} && rm wordpress*"

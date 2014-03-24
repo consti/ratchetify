@@ -6,8 +6,8 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/setup'
   require 'ratchetify/domain'
   
-  before :create, "setup:environment"
-  after :create, "domain:add"
+  before :wordpress, "setup:environment"
+  after :wordpress, "domain:add"
   
   desc "Deploy an app for the first time"
   namespace :create do

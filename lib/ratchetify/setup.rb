@@ -31,6 +31,10 @@ Capistrano::Configuration.instance.load do
         # dummy main
         create_dir "#{deploy_root}/main"
         
+        # remove default html and symbolic link
+        delete_dir "#{webroot_dir}/html"
+        delete_dir "/home/#{user}/html"
+        
         # enable ruby
         ruby
         # activate the daemontools
@@ -41,11 +45,16 @@ Capistrano::Configuration.instance.load do
       end  
     end # task :environment
     
-    desc "Cleans the uberspace, removes (most) changes"
-    task :clean do
+    desc "Cleans the uberspace, removes (most) changes, restores the uberspace as much as possible"
+    task :restore do
       run "mv bashrc.bak .bashrc"
       run "rm -rf .gem .gemrc .ratchet"
-      # keep ~/apps and ~/aconf for now ...
+      
+      # restore old html folder etc
+      create_dir "#{webroot_dir}/html"
+      run "ln -s #{webroot_dir}/html html/"
+      
+      # keep ./apps and ./aconf for now ...
     end # task :clean
     
   end # namespace

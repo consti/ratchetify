@@ -14,12 +14,12 @@ Capistrano::Configuration.instance.load do
     
     desc "Deploy an wordpress blog to uberspace"
     task :wordpress do
-      create_dir
+      create_web_dir
       create_database
     end
     
     
-    task :create_dir do
+    task :create_web_dir do
       create_dir deploy_dir unless dir_exists? deploy_dir
     end # task :create_dir
     

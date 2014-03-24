@@ -30,8 +30,8 @@ Capistrano::Configuration.instance.load do
         run "cd #{deploy_root} && mv wordpress #{application}"
         
         # cleanup
-        run "cd #{deploy_root} && rm wordpress*"
-        run "cd #{deploy_root} && rm -rf wp_tmp"
+        #run "cd #{deploy_root} && rm wordpress*"
+        run "cd #{webroot_dir} && rm -rf wordpress*"
         
         # rename word press to -> :application
         #run "cd #{deploy_root} && mv ./wordpress #{application}"

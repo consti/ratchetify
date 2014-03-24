@@ -22,7 +22,7 @@ Capistrano::Configuration.instance.load do
     
     task :create_web_dir do
       # download the worpress .tar
-      unless unless dir_exists? deploy_dir
+      unless dir_exists? deploy_dir
         # download wp and unpack it
         run "cd #{deploy_root} && curl -O https://s3-eu-west-1.amazonaws.com/ratchetp/wordpress-3.8.1.tar.gz"
         run "cd #{deploy_root} && mkdir wp_tmp"
@@ -33,7 +33,7 @@ Capistrano::Configuration.instance.load do
         run "cd #{deploy_root} && rm wordpress*"
         run "cd #{deploy_root} && rm -rf wp_tmp"
       end
-      #create_dir deploy_dir unless dir_exists? deploy_dir
+      
     end # task :create_dir
     
     task :create_database do
@@ -70,7 +70,7 @@ EOF
       # create symbolic links..
       run "cd #{webroot_dir} && ln -s #{deploy_dir} #{fetch :host}.#{fetch :domain}"
       run "cd #{webroot_dir} && ln -s #{deploy_dir} #{fetch :domain}" unless (wildcard_domain == false)
-    end
+    end # task :finalize
     
   end # namespace
 end

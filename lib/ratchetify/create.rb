@@ -4,8 +4,10 @@ Capistrano::Configuration.instance.load do
   require 'capistrano'
   require 'ratchetify/helpers'
   require 'ratchetify/setup'
+  require 'ratchetify/domain'
   
   before :create, "setup:environment"
+  after :create, "domain:add"
   
   desc "Deploy an app for the first time"
   namespace :create do

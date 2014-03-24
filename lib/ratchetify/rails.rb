@@ -12,8 +12,8 @@ Capistrano::Configuration.instance.load do
   desc "Deploy an app for the first time"
   namespace :create do
     
-    desc "Deploy an app to uberspace"
-    task :default do
+    desc "Deploy an RAILS app to uberspace"
+    task :rails do
       create_repo
       create_and_configure_database
       create_reverse_proxy
@@ -49,6 +49,7 @@ Capistrano::Configuration.instance.load do
       my_cnf.match(/^password=(\w+)/)
       mysql_pwd = $1
       
+      # create the database
       mysql_database = "#{user}_#{application}" # 'application' MUST NOT contain any '-' !!!
       run "mysql -e 'CREATE DATABASE IF NOT EXISTS #{mysql_database} CHARACTER SET utf8 COLLATE utf8_general_ci;'"
       

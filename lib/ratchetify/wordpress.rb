@@ -16,6 +16,7 @@ Capistrano::Configuration.instance.load do
     task :wordpress do
       create_web_dir
       create_database
+      finalize
     end
     
     
@@ -52,6 +53,12 @@ EOF
       put database_yml, "#{deploy_dir}/database.yml"
       
     end # task :create_database
+    
+    task :finalize do
+      # create symbolic links..
+      run "cd #{webroot_dir} && ln -s #{deploy_dir} #{fetch :host}.#{fetch :domain}"
+      run "cd #{webroot_dir} && ln -s #{deploy_dir} #{fetch :domain}" unless (wildcard_domain == false)
+    end
     
   end # namespace
 end

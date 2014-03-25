@@ -30,7 +30,6 @@ Capistrano::Configuration.instance.load do
       # ** [out :: sirius.uberspace.de] rm ~/service/run-fatfreecrm
       # ** [out :: sirius.uberspace.de] svc -dx . log
       # ** [out :: sirius.uberspace.de] rm -rf ~/etc/run-run-fatfreecrm
-       
       #run "cd service && rm ~/service/#{daemon_service}"
       #run "svc -dx #{daemon_service}"
       #run "rm -rf ~/etc/run-#{daemon_service}"

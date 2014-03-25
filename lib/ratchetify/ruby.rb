@@ -21,7 +21,6 @@ EOF
       # configure ruby
       run "echo 'gem: --user-install --no-rdoc --no-ri' > ~/.gemrc"
       run "gem install bundler"
-      #run "bundle install --path ~/.gem" # FIXME ?
       
       # cleanup
       run "rm /home/#{user}/ruby_scrip"

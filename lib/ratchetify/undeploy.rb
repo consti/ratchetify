@@ -26,6 +26,22 @@ Capistrano::Configuration.instance.load do
     end
     
     task :remove_service do
+      script = <<-EOF
+cd ~/service/#{daemon_service}
+rm ~/service/#{daemon_service}
+svc -dx . log
+rm -rf ~/etc/run-#{daemon_service}
+EOF
+
+      # upload script
+      put script, "/home/#{user}/rm-#{daemon_service}"
+      
+      # remove the service
+      run ". rm-#{daemon_service}"
+      
+      # cleanup
+      run "rm /home/#{user}/rm-#{daemon_service}"
+      
       # ** [out :: sirius.uberspace.de] cd ~/service/run-fatfreecrm
       # ** [out :: sirius.uberspace.de] rm ~/service/run-fatfreecrm
       # ** [out :: sirius.uberspace.de] svc -dx . log

@@ -22,6 +22,7 @@ Capistrano::Configuration.instance.load do
     task :remove_repo do
       run "cd #{deploy_root} && rm -rf #{fetch :application}"
       run "cd #{webroot_dir} && rm -rf #{fetch :host}.#{fetch :domain}"
+      run "cd #{webroot_dir} && rm -rf #{fetch :domain}" unless (wildcard_domain == false)
     end
     
     task :remove_service do

@@ -99,7 +99,9 @@ EOF
       
       # create a default application.yml file if non was provided
       if not file_exists? "#{deploy_dir}/config/application.yml"
-        run "cd #{deploy_dir}/config && cp application.example.yml application.yml"
+        if file_exists? "#{deploy_dir}/config/application.example.yml"
+          run "cd #{deploy_dir}/config && cp application.example.yml application.yml"
+        end
       end
       
       # run rake db:migrate to create all tables etc

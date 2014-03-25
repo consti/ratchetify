@@ -100,16 +100,19 @@ svc -dx . log
 rm -rf ~/etc/run-#{daemon_service}
 EOF
 
-      # upload script
-      put script, "/home/#{user}/rm-#{daemon_service}"
-      run "chmod 755 /home/#{user}/rm-#{daemon_service}"
+      unless not file_exists? "~/etc/run-#{daemon_service}"
+        # upload script
+        put script, "/home/#{user}/rm-#{daemon_service}"
+        run "chmod 755 /home/#{user}/rm-#{daemon_service}"
+
+        # remove the service
+        run ". ~/rm-#{daemon_service}"
+
+        # cleanup
+        run "rm /home/#{user}/rm-#{daemon_service}"
+      end
       
-      # remove the service
-      run ". ~/rm-#{daemon_service}"
-      
-      # cleanup
-      run "rm /home/#{user}/rm-#{daemon_service}"
-    end
+    end # task :remove
     
   end
 end

@@ -1,4 +1,4 @@
-require "ratchetify/version"
+require 'ratchetify/version'
 
 Capistrano::Configuration.instance.load do
   

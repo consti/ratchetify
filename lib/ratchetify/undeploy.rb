@@ -37,19 +37,11 @@ EOF
       put script, "/home/#{user}/rm-#{daemon_service}"
       
       # remove the service
-      run ". rm-#{daemon_service}"
+      run ". ~/rm-#{daemon_service}"
       
       # cleanup
       run "rm /home/#{user}/rm-#{daemon_service}"
       
-      # ** [out :: sirius.uberspace.de] cd ~/service/run-fatfreecrm
-      # ** [out :: sirius.uberspace.de] rm ~/service/run-fatfreecrm
-      # ** [out :: sirius.uberspace.de] svc -dx . log
-      # ** [out :: sirius.uberspace.de] rm -rf ~/etc/run-run-fatfreecrm
-      
-      #run "cd service && rm ~/service/#{daemon_service}"
-      #run "svc -dx #{daemon_service}"
-      #run "rm -rf ~/etc/run-#{daemon_service}"
     end
     
   end # namespace

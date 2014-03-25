@@ -20,14 +20,19 @@ Capistrano::Configuration.instance.load do
     end
     
     task :remove_repo do
-      run "cd #{deploy_root} && rm -rf #{application}"
-      run "cd #{webroot_dir} && rm -rf #{host}.#{domain}"
+      run "cd #{deploy_root} && rm -rf #{fetch :application}"
+      run "cd #{webroot_dir} && rm -rf #{fetch :host}.#{fetch :domain}"
     end
     
     task :remove_service do
-      run "cd service && rm ~/service/#{daemon_service}"
+      # ** [out :: sirius.uberspace.de] cd ~/service/run-fatfreecrm
+      # ** [out :: sirius.uberspace.de] rm ~/service/run-fatfreecrm
+      # ** [out :: sirius.uberspace.de] svc -dx . log
+      # ** [out :: sirius.uberspace.de] rm -rf ~/etc/run-run-fatfreecrm
+       
+      #run "cd service && rm ~/service/#{daemon_service}"
       #run "svc -dx #{daemon_service}"
-      run "rm -rf ~/etc/run-#{daemon_service}"
+      #run "rm -rf ~/etc/run-#{daemon_service}"
     end
     
   end # namespace

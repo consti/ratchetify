@@ -5,8 +5,10 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/helpers'
   require 'ratchetify/setup'
   require 'ratchetify/domain'
+  require 'ratchetify/service'
   
   before "create:rails", "setup:environment"
+  after "create:rails", "service:create"
   after "create:rails", "domain:add"
   
   desc "Deploy an app for the first time"
@@ -17,7 +19,6 @@ Capistrano::Configuration.instance.load do
       create_repo
       create_and_configure_database
       create_reverse_proxy
-      create_service
       config_rails_app
       finalize
     end
@@ -87,76 +88,6 @@ EOF
       run "chmod +r #{deploy_dir}/.htaccess"
       
     end # task :create_reverse_proxy
-
-    task :create_service do
-      create_service_thin # the only option for now
-      
-      # register the service
-      run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"
-      
-    end # task :create_service
-
-    task :create_service_thin do
-      # script to start thin
-      script = <<-EOF
-#!/bin/bash
-export HOME=/home/#{user}
-source $HOME/.bash_profile
-cd #{deploy_dir}
-exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec thin start -p #{daemon_port} -e production 2>&1
-EOF
-      
-      # upload the run script
-      put script, "/home/#{user}/bin/#{daemon_service}"
-      run "chmod 755 /home/#{user}/bin/#{daemon_service}"
-      
-    end # task :create_service_thin
-
-    task :create_service_unicorn do
-      # script to start unicorn
-      script = <<-EOF
-#!/bin/bash
-export HOME=/home/#{user}
-source $HOME/.bash_profile
-cd #{deploy_dir}
-exec /home/#{user}/.gem/ruby/#{ruby_version}/bin/bundle exec unicorn -p #{daemon_port} -c ./config/unicorn.rb -E #{environment} 2>&1
-EOF
-      
-      # upload the run script
-      put script, "/home/#{user}/bin/#{daemon_service}"
-      run "chmod 755 /home/#{user}/bin/#{daemon_service}"
-      
-      # script to configure unicorn
-      unicorn_rb = <<-EOF
-# config/unicorn.rb
-worker_processes 3
-timeout 15
-preload_app true
-
-before_fork do |server, worker|
-  Signal.trap 'TERM' do
-    puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
-    Process.kill 'QUIT', Process.pid
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
-end
-
-after_fork do |server, worker|
-  Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
-end      
-EOF
-  
-      # upload the unicorn config file, if it does not exist
-      put unicorn_rb, "#{deploy_dir}/config/unicorn.rb" unless file_exists? "#{deploy_dir}/config/unicorn.rb"
-      
-    end # task :create_service_unicorn
     
     task :config_rails_app do
       # run bundle install first

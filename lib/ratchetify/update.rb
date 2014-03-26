@@ -17,7 +17,7 @@ Capistrano::Configuration.instance.load do
       run "cd #{deploy_dir} && git checkout -b #{fetch :branch}" unless on_branch? deploy_dir, "#{fetch :branch}"
       
       # update the repo
-      git_cmd = "cd #{deploy_root} && git pull origin #{fetch :branch}"
+      git_cmd = "cd #{deploy_dir} && git pull origin #{fetch :branch}"
       
       run git_cmd do |channel, stream, out|
         if out =~ /Password:/

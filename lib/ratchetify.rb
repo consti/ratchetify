@@ -11,6 +11,7 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/domain'
   require 'ratchetify/rails'
   require 'ratchetify/wordpress'
+  require 'ratchetify/help' # monkey patched from capistrano
   
   # host and domain for the new app
   set :domain, nil

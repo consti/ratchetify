@@ -36,9 +36,9 @@ To get started with a new Rails app, use:
 $ rat create:rails
 ```
 
-This will prepare your uberspace if it is the first time you deploy an app using ratchetify, pull your app from a repo, create a database and database.yml for it, creates a run-script and registers it with uberspace's daemontools and finally runs the typical rake tasks needed to setup a rails app.
+This prepares your uberspace if it is the first time you deploy an app using ratchetify, pulls your app from a repo, creates a database and database.yml for it, creates a run-script and registers it with uberspace's daemontools and finally runs the typical rake tasks needed to setup a RAILS app.
 
-Ratchetify also registers your apps host-name and domain with the Apache webserver, you only need to make sure that your DNS entries point to the right uberspace.
+Ratchetify also registers your app's host-name and domain with the Apache webserver, you only have to make sure that your DNS entries point to the right uberspace.
 
 To update an app, use:
 
@@ -46,13 +46,15 @@ To update an app, use:
 $ rat update
 ```
 
-This stops the app, updates if from the repo, runs basic rake tasks and restarts the app finally.
+This stops the app, pulls the latest version from the repo, runs basic rake tasks and finally restarts the app.
 
-To remove an app completely use:
+To remove an app use:
 
 ```shell
 $ rat remove
 ```
+
+This stops the app, deletes its database and removes it from the file system. Be careful here, there is no way back!
 
 Ratchetify is based on Capistrano and you can get a list of all available commands any time using:
 

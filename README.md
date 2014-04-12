@@ -2,28 +2,63 @@
 
 Ratchetify helps you deploy a Ruby on Rails app on Uberspace (uberspace.de), a really cool shared hosting provider.
 
-All the magic is built into a couple nice Capistrano scripts. Ratchetify will create an environment for your app, run it in standalone mode, monitor it using Daemontools, and configure Apache to reverse-proxy to it. Ratchetify will also retrieve your MySQL password, create a dedicated database for your app and create a `database.yml`.
+All the magic is built into a couple nice Capistrano scripts. Ratchetify will create an environment for your app (folders, ruby, bundler etc) and then pull the app from e.g. github or bitbucket. To instantly run the app, ratchetify creates a database and matching database.yml file, adds a .htaccess file to the apps root folder so that Apache can reverse-proxy all request and finally run's the typical rake tasks (db:create, db:migrate, etc) to get going. 
+
+The app will be run by the Unicorn app server and monitored by Uberspace's daemontools.
 
 ## Installation
 
 Add this line to your application's `Gemfile`:
 
 ```ruby
-gem 'ratchetify', :git => 'https://github.com/ratchetcc/ratchetify.git'
+gem 'ratchetify'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
     
-This will install ratchetify, Capistrano 2.x and all dependent gems for you.
+This will install ratchetify and all its dependencies for you.
 
 ## How to use ratchetify
 
-There is a sample [capfile](https://github.com/ratchetcc/ratchetify/blob/master/Capfile.example) that shows the most important settings you need to get started. In addition to the
-attributes used in the Capfile, there are more attributes pre-set in lib/ratchetify.rb and lib/ratchetify/base.rb but usually there is no need to change any of these.
+There is a sample [capfile](https://github.com/ratchetcc/ratchetify/blob/master/Capfile.example) that shows the most important settings you need to get started. In addition to the attributes used in the Capfile, there are more attributes pre-set in lib/ratchetify.rb and lib/ratchetify/base.rb but usually there is no need to change any of these.
 
-This tools is highly opinionated i.e. all the settings, the way how I run the app etc. are THE WAY I LIKE IT. This does not mean it can not be done differently or that it is the best way to do it ...
+This tools is highly opinionated i.e. all the settings, the way how I run the app etc. are THE WAY I LIKE IT. 
+
+The first time ratchetify is used on a fresh uberspace, it creates some folders in /var/www/virtual/your_uberspace_name and symbolic links from your home directory to these folders. The default ~/html folder that by default hosts e.g. a static .html app is removed. The reason for this is that ratchetify allows you to deploy and run many apps side-by-side, within a single uberspace.
+
+### Basic commands
+
+To get started with a new Rails app, use:
+
+```ruby
+rat create:rails
+```
+
+This will prepare your uberspace if it is the first time you deploy an app using ratchetify, pull your app from a repo, create a database and database.yml for it, creates a run-script and registers it with uberspace's daemontools and finally runs the typical rake tasks needed to setup a rails app.
+
+Ratchetify also registers your apps host-name and domain with the Apache webserver, you only need to make sure that your DNS entries point to the right uberspace.
+
+To update an app, use:
+
+```ruby
+rat update
+```
+
+This stops the app, updates if from the repo, runs basic rake tasks and restarts the app finally.
+
+To remove an app completely use:
+
+```ruby
+rat remove
+```
+
+Ratchetify is based on Capistrano and you can get a list of all available commands any time using:
+
+```ruby
+rat -T
+```
 
 ## Credits
 

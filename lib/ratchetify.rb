@@ -24,7 +24,8 @@ Capistrano::Configuration.instance.load do
   set :type, :rails # supported types are: :rails, :wordpress, 
   
   # internal variables, should not be changed in the cap file
-  set :ruby_version, "2.0.0"
+  set :ruby_version, "2.1.1"
+  set :ruby_api_version, "2.1.0"
   set :environment, 'production'
   set :is_main,  false
   

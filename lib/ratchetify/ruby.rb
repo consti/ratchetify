@@ -11,7 +11,7 @@ Capistrano::Configuration.instance.load do
 
 # ruby #{ruby_version} environment
 export PATH=/package/host/localhost/ruby-#{ruby_version}/bin:$PATH
-export PATH=$HOME/.gem/ruby/#{ruby_version}/bin:$PATH
+export PATH=$HOME/.gem/ruby/#{:ruby_api_version}/bin:$PATH
 EOF
 
       # setup the ruby environment

@@ -22,7 +22,7 @@ Capistrano::Configuration.instance.load do
     end
 
     task :create do
-      create_service_thin # the only option for now
+      create_service_unicorn # default option 
       
       # register the service
       run "uberspace-setup-service #{daemon_service} ~/bin/#{daemon_service}"

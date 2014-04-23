@@ -15,11 +15,8 @@ Gem::Specification.new do |gem|
   gem.name          = "ratchetify"
   gem.require_paths = ["lib"]
   gem.version       = Ratchetify::VERSION
-  
+
   # dependencies for capistrano
   gem.add_dependency 'capistrano',        '2.12.0'
-  
-  # dependency for mysql on Uberspace
-  gem.add_dependency 'mysql2',            '>=0.3.11'
   
 end

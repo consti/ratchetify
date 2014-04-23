@@ -1,3 +1,3 @@
 module Ratchetify
-  VERSION = "1.0.2-postgresql"
+  VERSION = "1.0.2"
 end

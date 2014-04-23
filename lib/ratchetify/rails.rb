@@ -61,8 +61,6 @@ production:
   encoding: utf8
   database: #{mysql_database}
   pool: 5
-  host: localhost
-
 EOF
       # upload the database.yml file
       put database_yml, "#{deploy_dir}/config/database.yml"

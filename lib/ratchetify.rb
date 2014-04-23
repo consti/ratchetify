@@ -29,4 +29,4 @@ Capistrano::Configuration.instance.load do
   set :environment, 'production'
   set :is_main,  false
 
-end
+end if defined?(Capistrano)

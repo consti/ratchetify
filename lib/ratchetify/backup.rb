@@ -7,7 +7,8 @@ Capistrano::Configuration.instance.load do
 
   desc "Tasks to backup an app"
   namespace :backup do
-    desc :db do
+    desc "Create a DB backup in your home folder on uberspace"
+    task :db do
         # extract username
         my_cnf = capture('cat ~/.my.cnf')
 
@@ -21,7 +22,7 @@ Capistrano::Configuration.instance.load do
         run "cd #{deploy_dir} && pg_dump #{ postgres_database } | gzip > #{ filename }"
         puts "Backup of #{ postgres_database } created: #{ filename }"
     end
-    desc "Stop the service, update the app then restart"
+    desc "Run all other backup tasks"
     task :default do
       db
     end

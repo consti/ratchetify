@@ -42,24 +42,22 @@ Capistrano::Configuration.instance.load do
 
     task :create_and_configure_database do
 
-      # extract user & password
+      # extract username
       my_cnf = capture('cat ~/.my.cnf')
 
       my_cnf.match(/^user=(\w+)/)
-      mysql_user = $1
-      my_cnf.match(/^password=(\w+)/)
-      mysql_pwd = $1
+      user = $1
 
       # create the database
-      mysql_database = "#{user}_#{application}" # 'application' MUST NOT contain any '-' !!!
-      run "createdb #{mysql_database}"
+      postgres_database = "#{user}_#{application}"
+      run "createdb #{postgres_database}"
 
       # create the database.yml file
       database_yml = <<-EOF
 production:
   adapter: postgresql
   encoding: utf8
-  database: #{mysql_database}
+  database: #{postgres_database}
   pool: 5
 EOF
       # upload the database.yml file

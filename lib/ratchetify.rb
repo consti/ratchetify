@@ -10,6 +10,7 @@ Capistrano::Configuration.instance.load do
   require 'ratchetify/undeploy'
   require 'ratchetify/domain'
   require 'ratchetify/rails'
+  require 'ratchetify/backup'
   require 'ratchetify/wordpress'
   require 'ratchetify/update'
   require 'ratchetify/help' # monkey patched from capistrano

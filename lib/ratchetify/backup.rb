@@ -18,6 +18,7 @@ Capistrano::Configuration.instance.load do
         # database name
         postgres_database = "#{user}_#{application}"
         filename = "~/#{ postgres_database }-#{ Time.now.to_i }.sql.gz"
+        transfer :down, filename, filename, :via => :scp
 
         run "cd #{deploy_dir} && pg_dump #{ postgres_database } | gzip > #{ filename }"
         puts "Backup of #{ postgres_database } created: #{ filename }"

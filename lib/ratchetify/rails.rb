@@ -83,7 +83,7 @@ EOF
 
     task :config_rails_app do
       # run bundle install first
-      run "cd #{deploy_dir} && bundle install --path ~/.gem"
+      run "cd #{deploy_dir} && bundle install --without development test --path ~/.gem"
 
       # application.yml should normally be on the .gitignore list, however you application might need
       # a basic configuration file to e.g. load seed data. Provide such a basic file as 'application.example.yml'
